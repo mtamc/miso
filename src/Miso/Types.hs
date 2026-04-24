@@ -99,6 +99,7 @@ import           Data.String (IsString, fromString)
 import qualified Data.Text as T
 import           GHC.Generics
 import           GHC.Records
+import           GHC.TypeLits (Symbol)
 import           Prelude
 -----------------------------------------------------------------------------
 import           Miso.Binding ((<--), (-->), (<-->), (<---), (--->), (<--->), Binding(..))
@@ -310,7 +311,7 @@ data View parent model action
 -----------------------------------------------------------------------------
 -- |
 props
-  :: forall field parent a model action . HasField field parent a
+  :: forall (field :: Symbol) parent a model action . HasField field parent a
   => Proxy field
   -> (a -> View parent model action)
   -> View parent model action
