@@ -16,6 +16,8 @@
 {-# LANGUAGE LambdaCase                 #-}
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE CPP                        #-}
+{-# LANGUAGE PolyKinds                  #-}
+{-# LANGUAGE AllowAmbiguousTypes        #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Miso.Types
@@ -311,11 +313,10 @@ data View parent model action
 -----------------------------------------------------------------------------
 -- |
 props
-  :: forall (field :: Symbol) parent a model action . HasField field parent a
-  => Proxy field
-  -> (a -> View parent model action)
+  :: forall field parent a model action . HasField field parent a
+  => (a -> View parent model action)
   -> View parent model action
-props Proxy = VProp (getField @field @parent @a)
+props = VProp (getField @field @parent @a)
 -----------------------------------------------------------------------------
 -- | Existential wrapper allowing nesting of t'Miso.Types.Component' in t'Miso.Types.Component'
 data SomeComponent parent
